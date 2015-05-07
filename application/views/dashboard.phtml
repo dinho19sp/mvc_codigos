@@ -1,0 +1,70 @@
+<?php
+
+
+global $session;
+?>
+<script type="text/javascript">
+   var DataChart = <?=$PieChart;?>;
+   var DataChart2 = <?=$PieChart2;?>;
+</script>
+<?=$infoObras;?>
+<?php
+    if(Functions::getUserGroup() == 1):
+?>
+<br />
+<div class="row">
+    <div class="col-sm-6">
+
+        <div class="panel panel-primary" id="charts_env">
+
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>
+                        Obras cadastradas por segmento
+                        <br />
+                        <small>de todas as obras cadastradas</small>
+                    </h4>
+                    </div>
+                <div class="panel-options">
+
+                </div>
+            </div>
+
+            <div class="panel-body" style="height:400px;">
+
+                <div id="piechart" style="width:100%; height:100%;"></div>
+
+            </div>
+
+           
+        </div>
+
+    </div>
+
+    <div class="col-sm-6">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>
+                        Arquivos por categoria
+                        <br />
+                        <small>de todas as obras cadastradas</small>
+                    </h4>
+                </div>
+
+                <div class="panel-options">
+
+                </div>
+            </div>
+
+            <div class="panel-body" style="height:400px;">
+                <div id="piechart_3d" style="width:100%; height:100%;"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<?php endif; ?>
+
+

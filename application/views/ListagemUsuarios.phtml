@@ -1,0 +1,123 @@
+<?php
+
+$apps = new onCreateClass();
+//$Dados = $this->getParameters();
+
+?>
+
+<script>
+    xajax.callback.global.onRequest = function()
+    {
+
+        $('#toast-container').css("display",'block');
+
+    };
+    xajax.callback.global.onComplete = function()
+    {
+        $('#toast-container').css("display",'none');
+
+
+// Sample Function to add new row
+
+    };
+
+</script>
+
+<div id="toast-container" class="toast-top-right" style="display: none;">
+    <div class="toast toast-warning" >
+        <button class="toast-close-button">×</button>
+        <div class="toast-title"></div>
+        <div class="toast-message">Aguarde..</div>
+    </div>
+</div>
+
+<div class="panel panel-primary">
+
+    <div class="panel-heading ">
+        <!-- titulo do painel -->
+        <div class="panel-title">
+            <h4>
+                Usuarios Cadastrados
+                <br>
+                <small id="MsgError"></small>
+            </h4>
+        </div>
+
+        <!-- Controle do painel -->
+
+    </div>
+
+    <div class="panel-body">
+        <div class="panel">
+            <div class="col-md-12"><div id="msg"></div></div>
+        </div>
+        <p></p>
+        <p></p>
+        <div class="panel">
+            <div class="row">
+                <div class="col-sm-2">
+                    <button type="button" id="btn-search" class="btn btn-blue btn-icon icon-left">
+                        Busca avançada
+                        <i class="entypo-search"></i>
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" onclick="window.location='<?= $apps->getFunctions()->goToUrl("usuarios","novo-usuario"); ?>'"
+                            class="btn btn-green btn-icon icon-left">
+                        Novo Usuário
+                        <i class="entypo-user-add"></i>
+                    </button>
+                </div>
+                <div class="col-sm-8">
+                    <button type="button" id="btn_send"
+                            class="btn btn-red btn-icon icon-left right-aligned ">
+                        Deletar selecionados
+                        <i class="entypo-cancel"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" >
+            <div class="col-sm-2 pull-left-md">
+                <div class="btn-select-all"><div class="txt-select-all">Marcar todos</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="panel panel-search" style="display: none;">
+            <form id="form-1" name="form-1" method="post">
+                <input type="hidden" name="pgs_usuario" id="pgs_usuarios" class="form-control" value="0">
+                <div class="row">
+                    <span class="fa fa-info-circle popover-default information-popover"  data-toggle="popover" data-trigger="hover" data-html="1" data-placement="top" data-content="Para filtrar um Usuário você pode esta digitando umas das opções abaixo:<br /><br /><span class='fa fa-gavel'></span>&nbsp;&nbsp;Nome do usuário<br /><span class='fa fa-credit-card'></span>&nbsp;&nbsp;CPF do usuário<br /></span> data-original-title="Filtro de registro"></span>
+
+                    <div class="col-sm-3">
+
+                        <div class="input-group">
+                            <span class="input-group-btn"><button type="button" class="btn"><i class="fa fa-search-plus"></i></button></span>
+                            <input type="text" name="txtSearch" id="txtSearch" class="form-control" placeholder="Digite o valor a consultar " onkeyup="fn_ajax_DataGrid_Usuarios(pg,limite,this.value);">
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel">
+        <div id="ListaUsuarios"></div>
+    </div>
+
+    <div class="panel-footer" id="paginacao-form"> </div>
+
+</div>
+
+<script type="text/javascript">
+    var pg = $("#pgs_usuario").val();
+    var limite = 10;
+
+
+
+    fn_ajax_DataGrid_Usuarios(pg,limite,$("#txtSearch").val());
+
+</script>

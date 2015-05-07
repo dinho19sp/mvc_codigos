@@ -1,0 +1,404 @@
+<?php
+$apps = new onCreateClass();
+$dropDown = new phpFormComponents();
+$response = $this->getParameters();
+$dados = $response[0];
+
+?>
+<script>
+    xajax.callback.global.onRequest = function()
+    {
+
+        $('#toast-container').css("display",'block');
+
+    };
+    xajax.callback.global.onComplete = function()
+    {
+        $('#toast-container').css("display",'none');
+
+
+// Sample Function to add new row
+
+    };
+
+</script>
+
+<div id="toast-container" class="toast-top-right" style="display: none;margin-top: 16%;">
+    <div class="toast toast-warning" >
+        <button class="toast-close-button">×</button>
+        <div class="toast-title"></div>
+        <div class="toast-message">Aguarde..</div>
+    </div>
+</div>
+
+<div class="row">
+<div class="col-md-12">
+<div class="col-md-12"><div id="msg"></div></div>
+<form name="form-1" id="form-1" method="post" class="fn-form-validate">
+<input type="hidden" name="is_deleted" value="N">
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-primary panel-gradient">
+            <div class="panel-heading">
+                <!-- titulo do painel -->
+                <div class="panel-title">
+                    <h4>
+                        Novo Usuario
+                        <br>
+                        <small ><a > Adiciona um novo usuario</a></small>
+                    </h4>
+                </div>
+
+                <!-- Controle do painel -->
+                <div class="panel-options ">
+
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <div class="panel">
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label for="id_status">Natureza:</label>
+                            <br />
+                            <div class="btn-group"  data-toggle="buttons-radio">
+                                <button type="button" id="pf"  class="btn <?=$dados->id_natureza == 1 ? "btn-green active": "btn-default";?>" onclick="fn_xjx_set_value('id_natureza', 1,'value');
+                                    " data-toggle="button"><i class="icon-ok-sign"></i>&nbsp;Pessoa Fisíca
+                                </button>
+                                <button type="button" id="pj" class="btn <?=$dados->id_natureza == 2 ? "btn-orange active": "btn-default";?> " onclick="fn_xjx_set_value('id_natureza', 2,'value');" data-toggle="button"><i
+                                        class="icon-remove-circle"></i>&nbsp;Pessoa Juridica
+                                </button>
+
+                            </div>
+                            <input type="hidden" name="id_natureza" id="id_natureza" value="<?=$dados->id_natureza == 2 ? 2: 1;?>">
+                        </div>
+
+
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="user_nome">Nome :</label>
+                            <br />
+                            <div class="form-group">
+                                <input type="text" name="user_nome" id="user_nome" class="form-control fn-validate"  value="<?=$dados->user_nome;?>">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="user_nome">Data de nascimento :</label>
+                            <br />
+                            <div class="form-group">
+                                <input type="text" name="data_nascimento" id="data_nascimento" class="form-control fn-validate" value="<?=Functions::fncDataPadrao($dados->data_nascimento);?>">
+                            </div>
+                        </div>
+                        <?php if($apps->getApplication()->getParam('srcid')){ ?>
+                            <div class="col-md-2">
+                                <label for="id_status">Situação:</label>
+                                <br />
+                                <div class="btn-group"  data-toggle="buttons-radio">
+                                    <button type="button"  class="btn <?=$dados->id_status == 1 ? "btn-warning active": "btn-default";?> tooltip-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Ativo"" onclick="fn_xjx_set_value('id_status', 1,'value');
+                                    " data-toggle="button"><i class="fa fa-dot-circle-o" style="font-size:18px;color: <?=$dados->id_status == 1 ? "green": "";?>"></i>
+                                    </button>
+                                    <button type="button" class="btn <?=$dados->id_status == 2 ? "btn-warning active": "btn-default";?> tooltip-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Inativo" " onclick="fn_xjx_set_value('id_status', 2,'value');" data-toggle="button"><i
+                                            class="fa fa-circle-o" style="font-size:18px;color: <?=$dados->id_status == 2 ? "red": "";?>"></i>
+                                    </button>
+
+                                </div>
+                                <input type="hidden" name="id_status" id="id_status" value="<?=$dados->id_status == 2 ? 2: 1;?>">
+                            </div>
+
+                        <?php }else{ ?>
+                            <input type="hidden" name="id_status" id="id_status" value="1">
+                        <?php } ?>
+                    </div>
+                    <br />
+
+                    <!-- DOCUMENTOS -->
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label for="cpf">CPF:</label>
+                            <br />
+                            <div class="form-group">
+                                <input type="text" name="cpf" id="cpf" data-custom-validate="cpf" class="form-control fn-validate"  value="<?=$dados->cpf;?>">
+                            </div>
+                            <span id="span_cpf"></span>
+                        </div>
+
+                        <div class="col-md-5">
+                            <label for="rg">RG:</label>
+                            <br />
+                            <input type="text" name="rg" id="rg" class="form-control" value="<?=$dados->rg;?>">
+                        </div>
+
+
+                    </div>
+
+                    <br />
+
+                    <!--TELEFONES -->
+
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label for="ddd_r">(DDD)</label>
+                            <br />
+                            <input type="text" name="ddd_r" id="ddd_r" class="form-control"  data-mask="999" value="<?=$dados->ddd_r;?>" >
+                        </div>
+                        <div class="col-md-4">
+                            <label for="telefone_r">Telefone Res :</label>
+                            <br />
+                            <input type="text" name="telefone_r" id="telefone_r" class="form-control" data-mask="9999-9999" value="<?=$dados->telefone_r;?>">
+                        </div>
+
+
+                        <div class="col-md-1">
+                            <label for="ddd_cel_1">(DDD)</label>
+                            <br />
+                            <input type="text" name="ddd_cel_1" id="ddd_cel_1" class="form-control"  data-mask="999" value="<?=$dados->ddd_cel_1;?>">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="telefone_c">Celular :</label>
+                            <br />
+                            <input type="text" name="celular_1" id="celular_1" class="form-control" data-mask="99999-9999" value="<?=$dados->celular_1;?>">
+                        </div>
+                    </div>
+
+                    <!-- EMAIL -->
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-10">
+                            <label for="email_p">E-mail:</label>
+                            <br />
+                            <div class="form-group">
+                                <input type="email" name="email_p" id="email_p" class="form-control" value="<?=$dados->email_p;?>">
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+    <div class="col-md-6">
+
+        <div class="panel panel-primary panel-gradient ">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>
+                        Dados de acesso do usuário
+                        <br>
+                        <small>Endereços para o usuario</small>
+                    </h4>
+                </div>
+                <div class="panel-options">
+
+
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <div class="row">
+
+                    <div class="col-md-5">
+                       <label for="id_perfil">Tipo de usuário:</label>
+
+                        <br />
+                        <div class="btn-group"  data-toggle="buttons-radio">
+                            <button type="button" id="pf"  class="btn <?=$dados->id_perfil == 1 ? "btn-green active": "btn-default";?>" onclick="fn_xjx_set_value('id_perfil', 1,'value');
+                                    " data-toggle="button"><i class="icon-ok-sign"></i>&nbsp;Administrador
+                            </button>
+                            <button type="button" id="pj" class="btn <?=$dados->id_perfil == 2 ? "btn-orange active": "btn-default";?> " onclick="fn_xjx_set_value('id_perfil', 2,'value');" data-toggle="button"><i
+                                    class="icon-remove-circle"></i>&nbsp;Usuário comprador
+                            </button>
+
+                        <input type="hidden" name="id_perfil" id="id_perfil" value="<?=$dados->id_perfil == 2 ? 2: 1;?>">
+
+                        </div>
+                        &nbsp;&nbsp;<span class="fa fa-info-circle information-popover"  data-toggle="popover" data-trigger="hover" data-html="1" data-placement="top" data-content="Tipos de usuários definem o tipo de acesso do usuário:<br /><br />
+                        <span class='fa fa-user'></span>
+                        &nbsp;&nbsp;Usuário Administrador<br />
+                        &nbsp; &nbsp;&nbsp; - Tem acesso a area adminitrativa com todas permissões <br/><br />
+                        <span class='fa fa-credit-card'></span>
+                        &nbsp;&nbsp;Usuário Comprador<br />
+                         &nbsp; &nbsp;&nbsp;- Só terá acesso ao site e outros módulos do site<br />" data-original-title="Tipos de usuários"></span>
+                    </div>
+
+                </div>
+                <br/><br/>
+                <div class="row">
+
+                    <div class="col-md-10">
+                        <label for="user_login">Nome de usuário:</label>
+                        <br/>
+                        <input type="text" name="user_login" id="user_login" class="form-control" value="<?=$dados->user_login;?>">
+                    </div>
+
+                </div>
+                <br/><br/>
+                <div class="row">
+                    <div class="col-sm-10">
+                        <label for="" style="color: #b03626;"><i class="entypo-info-circled"></i><small>A senhas devem conter no max 8 caracteres</small> :</label>
+                        <br />
+                        <br />
+                    </div>
+                    <br />
+                    <div class="col-sm-5">
+                    <label for="user_pass">Senha:</label>
+                        <br />
+                        <input type="password"  class="form-control"  maxlength="8" id="user_pass" name="user_pass" placeholder="Password" value="">
+                    </div>
+                    <div class="col-sm-5">
+                    <label for="user_pass_2">Confirmar a senha:</label>
+                    <br>
+
+                    <input type="password"  class="form-control" maxlength="8"  id="uuser_pass_2" name="user_pass_2" placeholder="Confirm password" onblur="fn_xjx_valida_senha(''+$('#user_pass').val()+'',''+this.value+'');" value="">
+                    <span class="validate-has-error" id="msg-error-senha"></span>
+                </div>
+
+                </div>
+                <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><br />  <br />
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<div class="panel panel-primary panel-gradient">
+
+    <div class="panel-heading">
+        <!-- titulo do painel -->
+        <div class="panel-title">
+            <h4>
+                Dados de Endereço Residencial
+                <br>
+                <small>Endereços para o usuario</small>
+            </h4>
+        </div>
+        <div class="panel-options">
+
+
+        </div>
+
+    </div>
+    <div class="panel-body">
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <label for="cep_r">CEP:</label>
+                <br/>
+                <input type="text" name="cep_r" onblur="fn_xjx_helperGetCep(xajax.getFormValues('form-1'), 'cep_r');" id="cep_r" class="form-control"
+                       data-mask="99999-999" value="<?=$dados->cep_r;?>">
+            </div>
+
+            <div class="col-md-3">
+                <label for="id_logradouro_r">Logradouro:</label>
+                <br/>
+                <select name="id_logradouro_r" id="id_logradouro_r" class="form-control" value="<?=$dados->id_logradouro_r;?>">
+                    <?php
+
+                    $dropDown->DropDownList('tb_enderecos_logradouro', 'id_logradouro', 'logradouro_nome',$dados->id_logradouro_r);
+                    ?>
+                </select>
+            </div>
+
+
+            <div class="col-md-3">
+                <label for="id_estado">Estado:</label>
+                <br/>
+                <select name="id_estado_r" id="id_estado_r" class="form-control">
+                    <?php
+                    $dropDown->DropDownList('tb_enderecos_estados', 'id_estado', 'estado_sigla',$dados->id_estado_r);
+                    ?>
+                </select>
+            </div>
+
+        </div>
+
+        <br/>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label for="logradouro_nome_r">Endereço:</label>
+                <br/>
+                <input type="text" name="logradouro_nome_r" id="logradouro_nome_r" class="form-control" value="<?=$dados->logradouro_nome_r;?>">
+            </div>
+            <div class="col-md-1">
+                <label for="numero_r">Numero:</label>
+                <br/>
+                <input type="text" name="numero_r" id="numero_r" class="form-control" data-mask="99999" value="<?=$dados->numero_r;?>">
+            </div>
+            <div class="col-md-3">
+                <label for="complemento_r">Complemento:</label>
+                <br/>
+                <input type="text" name="complemento_r" id="complemento_r" class="form-control"  value="<?=$dados->complemento_r;?>">
+            </div>
+
+        </div>
+
+        <br/>
+
+        <div class="row">
+            <div class="col-md-5">
+                <label for="bairro_r">Bairro:</label>
+                <br/>
+                <input type="text" name="bairro_r" id="bairro_r" class="form-control" value="<?=$dados->bairro_r;?>">
+            </div>
+            <div class="col-md-5">
+                <label for="cidade_r">Cidade:</label>
+                <br/>
+                <input type="text" name="cidade_r" id="cidade_r" class="form-control" value="<?=$dados->cidade_r;?>" >
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<div class="panel panel-primary panel-gradient">
+
+    <div class="row">
+        <div class="panel-body">
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-green btn-icon icon-left btn-block fn-save">
+                    Salvar
+                    <i class="entypo-check"></i>
+                </button>
+                <input type="hidden" name="<?= $apps->getApplication()->getParam('srcid') ? "Alterar" : "Salvar"; ?>" value=TRUE>
+            </div>
+
+            <div class="col-sm-2">
+                <button type="button" class="btn btn-orange btn-icon icon-left  btn-block" onclick="window.location='<?= $apps->getFunctions()->goToUrl("usuario",null); ?>'">
+                    Cancelar
+                    <i class="entypo-cancel"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+</form>
+</div>
+
+</div>

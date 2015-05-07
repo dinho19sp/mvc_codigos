@@ -1,0 +1,139 @@
+<?php
+$DataReader = $this->getParameters();
+
+$get =new onCreateClass();
+
+$status = $get->getApplication()->getParam('view-list');
+
+
+//var_dump($DataReader);
+# By Francisco Nascimento
+?>
+<script type="text/javascript">
+
+</script>
+<h2>Minhas notificações</h2>
+
+<!-- Comments Area -->
+<section class="comments-env">
+
+
+<!-- Search and Comment Pagination (Header) -->
+<div class="filtering">
+
+
+</div>
+
+
+<!-- Comments List Panel -->
+<div class="row">
+
+<div class="col-md-12">
+
+<div class="panel panel-primary">
+
+<div class="panel-heading">
+    <div class="panel-title">
+        <h4>
+           Total de arquivos listado
+            <span class="badge badge-danger" id="qtd"><?=$DataReader['Qtd_arquivos'];?></span>
+
+        </h4>
+
+
+    </div>
+  </div>
+
+<div class="panel-body no-padding">
+
+<!-- List of Comments -->
+<ul class="comments-list">
+
+    <?php
+    if($DataReader['Lista_arquivos']):
+
+     foreach($DataReader['Lista_arquivos'] as $key => $data):
+
+         switch($status)
+         {
+             case 3:
+                 $text = " foi rejeitado por ";
+                 $motivo = " Motivo especificado pelaa rejeição: <span style='color:red;'>".$data->motivo_descricao."</span>";
+                 $usuario = $get->getFunctions()->getNomeUsuarioId($data->id_usuario_alteracao);
+                 $datado = "rejeitado em ". Functions::fncDataPadrao($data->data_alteracao);
+
+              break;
+             case 1:
+                 $text = " foi aprovado por ";
+                 $motivo = "";
+                 $usuario = $get->getFunctions()->getNomeUsuarioId($data->id_usuario_alteracao);
+                 $datado = "aprovado em ". Functions::fncDataPadrao($data->data_alteracao);
+
+                 break;
+             case 0:
+                 $text = " foi adicionado na obra por ";
+                 $motivo = "";
+
+                 if($data->id_usuario_upload == Functions::getUserId())
+                 {
+                     $usuario = "por você";
+
+                 }
+                 else
+                 {
+                     $usuario = $get->getFunctions()->getNomeUsuarioId($data->id_usuario_upload);
+                 }
+                 $datado = "adicionado em ". Functions::fncDataPadrao($data->data_alteracao);
+
+                 break;
+         }
+    ?>
+<!-- Comment Entry -->
+        <li class='linhas' id="list_<?=$data->id_notificacao;?>">
+
+
+    <div class="comment-details">
+
+        <div class="comment-head">
+            <a href="javascript:void(0);"><?=$data->nome_midia;?></a> <?=$text;?> <a href="javascript:void(0);"><?=$usuario;?></a>
+        </div>
+
+        <p class="comment-text">
+            <?=$motivo;?>
+        </p>
+
+        <div class="comment-footer">
+
+            <div class="comment-time">
+                <?=$datado;?>
+            </div>
+
+            <div class="action-links">
+
+                <a href="#" class="delete" onclick="fn_xjx_notify_delete(<?=$status;?>,<?=$data->id_midia;?>,<?=Functions::getUserId();?>,<?=$data->id_obra;?>);jQuery('#list_<?=$data->id_notificacao;?>').hide('slow');jQuery('#qtd').html(jQuery('.linhas:visible').length-1)">
+                    <i class="entypo-cancel"></i>
+                    Deletar
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</li>
+
+    <?php
+    endforeach;
+    endif;
+
+    ?>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</div>

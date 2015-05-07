@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+  <initialize>
+    <bootInit>TRUE</bootInit>
+        <environment>
+            <local>host_local</local>
+            <developer>host_developer</developer>
+            <prodution>host_local</prodution>
+        </environment>
+    <sessionClass>SessionStart</sessionClass>
+    <includes>
+        <header>header.php</header>
+        <sidebar>sidebar.php</sidebar>
+        <contents>contents.php</contents>
+        <footer>footer.php</footer>
+    </includes>
+ </initialize>
+

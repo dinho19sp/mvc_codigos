@@ -1,0 +1,116 @@
+<?php
+error_reporting(E_ALL);
+/*
+ *  Instancia os elementos de url , css, js
+ *
+ *  Definidos no arquivo app.host.config.xml
+ *
+ *  - Para inserir css basta usar:
+ *      $environment->get_css("caminho-arquivo","arquivo-css");
+ *
+ */
+$environment = new ElementosRoot;
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Neon Admin Panel" />
+    <meta name="author" content="" />
+
+    <title>Administrativo Mutual Construções:: Login</title>
+
+
+    <?php
+
+    # get files css
+    $environment->get_css("jquery-ui-1.10.3.custom.min","includes/assets/js/jquery-ui/css/no-theme/");
+    $environment->get_css("entypo","includes/assets/css/font-icons/entypo/css/");
+    $environment->get_css("http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic",NULL,TRUE);
+    $environment->get_css("bootstrap");
+    $environment->get_css("neon-core");
+    $environment->get_css("neon-theme");
+    $environment->get_css("neon-forms");
+    $environment->get_css("custom");
+
+    # get files javascript
+    $environment->get_jsc("jquery-1.11.0.min");
+    setcookie('data_url',$environment->getHost());
+
+    ?>
+
+    <script src="includes/assets/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <!--[if lt IE 9]><?php $environment->get_jsc("ie8-responsive-file-warning"); ?><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <?php
+            $environment->get_css("https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js",NULL,TRUE);
+    $environment->get_css("https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js",NULL,TRUE);
+    ?>
+
+    <![endif]-->
+
+
+</head>
+<body class="page-body " data-url="">
+
+
+<!-- This is needed when you send requests via Ajax -->
+<script type="text/javascript">
+    var baseurl = '<?=$environment->getHost();?>';
+</script>
+
+<div class="page-error-404">
+
+
+    <div class="error-symbol">
+        <i class="entypo-attention"></i>
+    </div>
+
+    <div class="error-text">
+        <h2>404</h2>
+        <p>Página não encontrada</p>
+    </div>
+
+    <hr />
+
+    <div class="error-text">
+
+        <a href="javascript:void(0);" onclick="history.go(-1);">Voltar</a>
+
+        <br />
+        <br />
+
+
+
+    </div>
+
+</div>
+<?php
+
+# Elementos Javascript Bottom
+
+$environment->get_jsc("main-gsap","includes/assets/js/gsap/");
+$environment->get_jsc("jquery-ui-1.10.3.minimal.min","includes/assets/js/jquery-ui/js/");
+$environment->get_jsc("bootstrap");
+$environment->get_jsc("joinable");
+$environment->get_jsc("resizeable");
+$environment->get_jsc("neon-api");
+$environment->get_jsc("jquery.validate.min");
+$environment->get_jsc("jquery.inputmask");
+$environment->get_jsc("neon-custom");
+$environment->get_jsc("neon-login");
+$environment->get_jsc("neon-demo");
+$environment->get_jsc("franx_custom");
+
+?>
+
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<db>
+    <mysql>
+        <host>10.9.8.104</host>
+        <database>hammer-leilao</database>
+        <user>root</user>
+        <pass>wlg49890</pass>
+        <type>mysql</type>
+    </mysql>
+    <!--<mysql>
+        <host>mysql09.krakendigital1.hospedagemdesites.ws</host>
+        <database>krakendigital112</database>
+        <user>krakendigital112</user>
+        <pass>thUgat6W</pass>
+        <type>mysql</type>
+    </mysql>-->
+    <pgsql>
+        <host></host>
+        <name></name>
+        <user></user>
+        <pass></pass>
+        <type></type>
+    </pgsql>
+    <mssql>
+        <host></host>
+        <name></name>
+        <user></user>
+        <pass></pass>
+        <type></type>
+    </mssql>
+    <sqlite>
+        <host></host>
+        <name></name>
+        <user></user>
+        <pass></pass>
+        <type></type>
+
+    </sqlite>
+</db>

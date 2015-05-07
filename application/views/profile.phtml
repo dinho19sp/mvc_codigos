@@ -1,0 +1,393 @@
+<?php
+# verifica se o usuario esta logado";
+Functions::is_logado();
+$app = new ElementosRoot();
+
+$get = new onCreateClass();
+$DADOS = $this->getParameters();
+$profile = $DADOS['DADOS_USER'][0];
+$projets = $DADOS['USER_PROJECT'];
+$image = $DADOS['IMG_USER'];
+
+$qtdProject = count($projets);
+
+
+
+?>
+<div class="profile-env">
+
+    <header class="row">
+
+        <div class="col-sm-2">
+
+            <a href="#" class="profile-picture">
+                <img src="<?= $image; ?>" class="img-responsive img-circle" width="85"/>
+            </a>
+
+        </div>
+
+        <div class="col-sm-7">
+
+            <ul class="profile-info-sections">
+                <li>
+                    <div class="profile-name">
+                        <strong>
+                            <a href="#"><?=$profile->nome_usuario;?></a>
+                            <a href="#" class="user-status is-online tooltip-primary" data-toggle="tooltip" data-placement="top" data-original-title="Online"></a>
+                            <!-- User statuses available classes "is-online", "is-offline", "is-idle", "is-busy" -->						</strong>
+                        <span><a href="#"><?=$profile->nome_perfil;?></a></span>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </header>
+    <br />
+    <section class="profile-info-tabs">
+
+        <div class="row">
+
+            <div class="col-sm-offset-2 col-sm-10">
+
+                <ul class="user-details">
+                    <li>
+                        <a href="#">
+                            <i class="entypo-docs"></i>
+                            <?=$profile->cpf_cnpj;?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="entypo-mail"></i>
+                            <?=$profile->usuario_email;?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="entypo-phone"></i>
+                            <?=$profile->telefone;?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="entypo-phone"></i>
+                            <?=$profile->celular;?>
+                        </a>
+                    </li>
+
+
+                </ul>
+
+
+                <!-- tabs for the profile links -->
+                <div class="col-md-6">
+
+                    <ul class="nav nav-tabs bordered"><!-- available classes "bordered", "right-aligned" -->
+                        <li class="active">
+                            <a href="#home" data-toggle="tab">
+                                <span class="visible-xs"><i class="entypo-home"></i></span>
+                                <span class="hidden-xs">Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#profile" data-toggle="tab">
+                                <span class="visible-xs"><i class="entypo-user"></i></span>
+                                <span class="hidden-xs">Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#alt_password" data-toggle="tab">
+                                <span class="visible-xs"><i class="entypo-user"></i></span>
+                                <span class="hidden-xs">Alterar Senha</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+
+
+
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+    <div class="row">
+        <div class="col-sm-12">
+        <div class="tab-content">
+
+        <div class="tab-pane active" id="home">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+
+                    <!-- titulo do painel -->
+                    <div class="panel-title">
+                        <h4>
+                            Obras Mutual em que estou vinculado: <span class="badge badge-success"><?=$qtdProject;?></span>
+                            <br>
+                            <small> </small>
+
+                        </h4>
+                    </div>
+
+                    <!-- Controle do painel -->
+                    <div class="panel-options ">
+
+
+                    </div>
+
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="gallery-env">
+                        <div class="row">
+
+                            <?php
+                            foreach($projets as $key => $val)
+                            {
+                                if($val->obra_descricao)
+                                {
+                                    $descricao = $val->obra_descricao;
+                                } else {
+                                    $descricao = "Esta obra não possui nenhuma descrição.";
+                                }
+
+                                $ObraSemImage = $get->getFunctions()->getImg('tb_obras',$val->id_obra);
+
+
+                                ?>
+
+                                <div class="col-sm-4">
+                                    <article class="album">
+                                        <header>
+                                            <a href="javascript:void(0);" onclick="window.location='<?=$get->getFunctions()->goToUrl('usuarios','midias',array('srcid' => $val->id_obra));?>'">
+                                            <img src="<?=$ObraSemImage;?>" height="301">
+                                            </a>
+                                            <a href="javascript:void(0);" onclick="window.location='<?=$get->getFunctions()->goToUrl('usuarios','midias',array('srcid' => $val->id_obra));?>'" class="album-options">
+                                                <i class="entypo-cog"></i>
+                                                Ver mais ...
+                                            </a>
+                                        </header>
+
+                                        <section class="album-info">
+                                            <h3> <a  href="javascript:void(0);" onclick="window.location='<?=$get->getFunctions()->goToUrl('usuarios','midias',array('srcid' => $val->id_obra));?>'">Obra <?=$val->obra_nome;?></a></h3>
+
+                                            <h4>Tipo de Obra: <small> <?=$val->segmento_nome;?></small></h4>
+                                            <p><?=Functions::limit_text($descricao, 138); ?></p>
+
+                                        </section>
+                                        <footer>
+                                            <div class="album-images-count popover-default" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Repepresenta a quantidade geral de arquivos cadastrados para a obra" data-original-title="Arquivos cadastrados na obra" >
+                                                <span style="font-size: 14px;"><i class="entypo-picture"></i>  <?=$get->getFunctions()->TotalArquivosObras($val->id_obra);?></span>
+                                            </div>
+                                            <div class="album-options">
+                                                <!--opções aqui se houver -->
+                                            </div>
+                                        </footer>
+                                    </article>
+                                </div>
+
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tab-pane" id="profile">
+
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4>
+                            <span class="entypo-arrows-ccw"></span> Editar meu dados Cadastrais:
+                            <br>
+                            <small></small>
+                        </h4>
+                    </div>
+
+                    <!-- Controle do painel -->
+                    <div class="panel-options ">
+                        <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+                        <a href="#" data-rel="collapse"><i class="entypo-search"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form role="form"  name="form-1" id="form-1" enctype="multipart/form-data" class="form-horizontal form-groups-bordered validate" novalidate="novalidate" method="post">
+                        <input type="hidden"  id="tipo_usuario" name="tipo_usuario" value="2">
+
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Image Upload</label>
+
+                            <div class="col-sm-5 pull-left">
+
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;" data-trigger="fileinput">
+                                        <img src="<?=$image;?>" alt="...">
+                                    </div>
+                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px"></div>
+                                    <div>
+									<span class="btn btn-white btn-file">
+										<span class="fileinput-new">Selecionar imagem</span>
+										<span class="fileinput-exists">Selecionar outra</span>
+										<input type="file" name="foto[]" accept="image/*">
+									</span>
+                                        <a href="#" class="btn btn-orange fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+
+                            <div class="col-sm-6">
+                                <label for="usuario_nome">Nome:</label>
+                                <br>
+                                <input type="text"  class="form-control" data-validate="required" data-message-required="Este campo é de preenchimento obrigatorio." placeholder="Campo Obrigatorio" id="nome_usuario" name="nome_usuario" placeholder="(*) Nome" value="<?=$profile->nome_usuario;?>">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-sm-3">
+                                <label for="telefone">Telefone:</label>
+                                <br>
+                                <input type="text"  class="form-control" id="telefone" name="telefone"  value="<?=$profile->telefone;?>">
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label for="celular">Celular:</label>
+                                <br>
+                                <input type="text"  class="form-control" id="celular" name="celular"  value="<?=$profile->celular;?>">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-sm-6">
+                                <label for="usuario_email">E-mail:</label>
+                                <br>
+                                <input type="text"  class="form-control" data-validate="required" data-message-required="Este campo é de preenchimento obrigatorio." placeholder="Campo Obrigatorio" id="email_usuario" name="email_usuario" placeholder="(*) Email" value="<?=$profile->usuario_email;?>">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-sm-3">
+                                <label for="id_regiao">Grupo:</label>
+                                <br>
+                                <select id="id_perfil" name="id_perfil" class="form-control" <?=(($profile->nome_perfil=="Administrador")?"":"disabled");?>>
+                                    <?php
+                                    $componetList = new phpFormComponents();
+                                    $componetList->addOptionValue("Selecione o perfil");
+                                    $componetList->DropDownList('tb_perfil','id_perfil','nome_perfil',$profile->id_perfil);
+                                    ?>
+                                </select>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+
+                            <div class="form-group pull-right" style="margin-right: 10%;">
+                                <button type="submit" name="Salvar" id="SalvarDados" value="Alterar" class="btn btn-success">
+                                    <i class="entypo-login"></i>
+                                    Salvar alterações
+                                </button>
+                            </div>
+                        </div>
+
+
+                </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="tab-pane" id="alt_password">
+
+
+            <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body">
+
+                    <div class="col-sm-12">
+                        <p></p>
+                        <p></p>
+                        <div class="panel">
+                            <div class="col-md-12">
+                                <div id="msg"></div>
+                            </div>
+                        </div>
+                    <form role="form"  name="form-2" id="form-2" class="form-horizontal form-groups-bordered validate" novalidate="novalidate" method="post">
+                    <div class="form-group panel-heading">
+                        <div class="col-sm-3">
+                            Dados de Acesso:
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label for="usuario_login">Login:</label>
+                                <br>
+                                <input type="text"  class="form-control" data-validate="required" data-message-required="Este campo é de preenchimento obrigatorio." placeholder="Campo Obrigatorio" id="login" name="login" placeholder="Login" value="<?=$profile->usuario_login;?>" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                <label for="usuario_pass">Senha:</label>
+                                <br>
+                                <input type="password"  class="form-control" data-validate="required" data-message-required="Este campo é de preenchimento obrigatorio." placeholder="Campo Obrigatorio" id="usuario_pass" name="usuario_pass" placeholder="Password" value="">
+                            </div>
+                            <div class="col-sm-2">
+                                <label for="usuario_pass_2">Confirmar a senha:</label>
+                                <br>
+
+                                <input type="password"  class="form-control" data-validate="required" data-message-required="Este campo é de preenchimento obrigatorio." placeholder="Campo Obrigatorio" id="usuario_pass_2" name="usuario_pass_2" placeholder="Confirm password" onblur="fn_xjx_valida_senha(xajax.getFormValues('form-2'));" value="">
+                                <span class="validate-has-error" id="msg-error-senha"></span>
+                            </div>
+                            <div class="form-group pull-right" style="margin-right: 10%;">
+                                <button type="submit" name="Salvar" id="SalvarSenha" value="AlerarSenha" class="btn btn-success">
+                                    <i class="entypo-login"></i>
+                                    Salvar alterações
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+            </form>
+                </div>
+                </div>
+            </div>
+        </div>
+
+            </div>
+        </div>
+    </div>
+</div>

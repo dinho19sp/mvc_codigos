@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<hostname>
+    <local>
+        <host>http://10.9.8.104/hammer-leiloes/</host>
+		<host_admin></host_admin>
+        <host_https></host_https>
+    </local>
+    <developer>
+        <host></host>
+		 <host_admin></host_admin>
+		 <host_https></host_https>
+    </developer>
+    <producao>
+        <host></host>
+		 <host_admin></host_admin>
+		 <host_https></host_https>
+    </producao>
+    <facebook>
+    	<app_id></app_id>
+    	<app_secret></app_secret>
+    </facebook>
+    <moip>
+        <moip_key></moip_key>
+        <moip_token></moip_token>
+    </moip>
+</hostname>

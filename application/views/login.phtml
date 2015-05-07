@@ -1,0 +1,333 @@
+<?php
+error_reporting(E_ALL);
+/*
+ *  Instancia os elementos de url , css, js
+ *
+ *  Definidos no arquivo app.host.config.xml
+ *
+ *  - Para inserir css basta usar:
+ *      $environment->get_css("caminho-arquivo","arquivo-css");
+ *
+ */
+$environment = new ElementosRoot;
+global $ajax;
+
+print $ajax->_xajax_js;
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="Neon Admin Panel" />
+	<meta name="author" content="" />
+	
+	<title>Administrativo Mutual Construções:: Login</title>
+
+
+    <?php
+
+    # get files css
+    $environment->get_css("jquery-ui-1.10.3.custom.min","includes/assets/js/jquery-ui/css/no-theme/");
+    $environment->get_css("entypo","includes/assets/css/font-icons/entypo/css/");
+    $environment->get_css("http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic",NULL,TRUE);
+    $environment->get_css("bootstrap");
+    $environment->get_css("neon-core");
+    $environment->get_css("neon-theme");
+    $environment->get_css("neon-forms");
+    $environment->get_css("custom");
+
+    # get files javascript
+    $environment->get_jsc("jquery-1.11.0.min");
+    setcookie('data_url',$environment->getHost());
+
+    ?>
+
+	<script src="includes/assets/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<!--[if lt IE 9]><?php $environment->get_jsc("ie8-responsive-file-warning"); ?><![endif]-->
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+        <?php
+            $environment->get_css("https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js",NULL,TRUE);
+            $environment->get_css("https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js",NULL,TRUE);
+        ?>
+
+	<![endif]-->
+
+	
+</head>
+<body class="page-body login-page login-form-fall" data-url="">
+
+
+<!-- This is needed when you send requests via Ajax -->
+<script type="text/javascript">
+    var baseurl = '<?=$environment->getHost();?>';
+    $(document).ready(function(){
+
+        $('#row_security').hide();
+        $('#row_senha').hide();
+        $('#row_actions').hide();
+
+    });
+
+
+</script>
+
+<div class="login-container ">
+	
+	<div class="login-header login-caret">
+		
+		<div class="login-content">
+			
+			<a href="<?=$environment->getHost();?>" class="logo">
+				<img src="<?=$environment->getImg()."logo@2x.png";?>" alt="" width="150"/>
+			</a>
+			
+			<p class="panel-body panel-gradient">Intermediações de negócios</p>
+
+			<!-- progress bar indicator -->
+			<div class="login-progressbar-indicator">
+                <br /><br />
+				<span>logging in...<h3>43%</h3></span>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div class="login-progressbar">
+		<div></div>
+	</div>
+	
+	<div class="login-form">
+
+		<div class="login-content">
+
+
+            <!-- Implemented in v1.1.4 -->
+
+			<div class="form-login-error">
+				<h3>Login inválido</h3>
+				<p>Entre com seu<strong>login</strong>/<strong>senha</strong> validos.</p>
+			</div>
+
+
+			<form method="post" role="form" id="form_login">
+
+
+
+				<div class="form-group">
+
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="entypo-user"></i>
+						</div>
+
+						<input type="text" class="form-control" name="username" id="username" placeholder="Usuário" autocomplete="off" />
+					</div>
+
+				</div>
+
+				<div class="form-group">
+
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="entypo-key"></i>
+						</div>
+
+						<input type="password" class="form-control" name="password" id="password" placeholder="Senha" autocomplete="off" />
+					</div>
+
+				</div>
+
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-block btn-login">
+						<i class="entypo-login"></i>
+						Entrar
+					</button>
+				</div>
+
+				<!-- Implemented in v1.1.4 -->
+                <!--
+                <div class="form-group">
+
+                    <button type="button" class="btn btn-default btn-lg btn-block btn-icon icon-left facebook-button">
+                        Login with Facebook
+                        <i class="entypo-facebook"></i>
+                    </button>
+
+                </div>
+
+
+                You can also use other social network buttons
+                <div class="form-group">
+
+                    <button type="button" class="btn btn-default btn-lg btn-block btn-icon icon-left twitter-button">
+                        Login with Twitter
+                        <i class="entypo-twitter"></i>
+                    </button>
+
+                </div>
+
+                <div class="form-group">
+
+                    <button type="button" class="btn btn-default btn-lg btn-block btn-icon icon-left google-button">
+                        Login with Google+
+                        <i class="entypo-gplus"></i>
+                    </button>
+
+                </div> -->
+			</form>
+
+
+			<div class="login-bottom-links">
+				
+				<a href="javascript:void(0)" href="javascript:;" onclick="jQuery('#modal-6').modal('show', {backdrop: 'static'});"  class="link">Esqueceu a senha?</a>
+				
+				<br />
+				
+
+				
+			</div>
+			
+		</div>
+		
+	</div>
+	
+</div>
+
+<div class="panel" style="background:none;">
+    <div class="col-md-12"><div id="msg"></div></div>
+</div>
+
+<div class="modal fade" id="modal-6">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="btnCancelar2" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><span class="entypo-key"></span> Redefinição de senha</h4>
+            </div>
+
+            <div class="modal-body">
+
+               <form name="formRecover" id="formRecover" method="post">
+                   <div class="panel">
+                       <div class="row">
+                           <div class="col-md-12">
+                               <div class="form-group">
+                                   Digite abaixo os dados para redefinir sua senha
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-md-12">
+
+                           <div class="form-group">
+                               <label for="cpf_cnpj" class="control-label">CPF</label>
+
+                               <input type="text" name="cpf_cnpj" class="form-control" onblur="fn_xjx_recover_password(xajax.getFormValues('formRecover'));" id="cpf_cnpj" >
+                               <span id="span_cpf_cnpj"></span>
+                           </div>
+
+                       </div>
+
+                   </div>
+                   <div class="row">
+                       <div class="col-md-12">
+
+                           <div class="form-group">
+                               <label for="usuario_email"  class="control-label">Email</label>
+
+                               <input type="text" name="usuario_email" class="form-control" id="usuario_email" onblur="fn_xjx_recover_password(xajax.getFormValues('formRecover'));">
+                               <span id="span_usuario_email"></span>
+                           </div>
+
+                       </div>
+                   </div>
+                   <div class="row" id="row_security">
+                       <div class="col-md-12">
+
+                           <div class="form-group">
+                               <label for="usuario_security"  class="control-label">Codigo de segurança <span class="entypo-info-circled popover-default" style='font-size: 14px; color: orangered;' data-toggle='popover' data-trigger='hover' data-placement='top' data-content='O Código de segurança é um código que foi gerado e foi enviado para o seu email, esse código deve ser digitado abaixo para que voçê possa redefinir sua senha' data-original-title='O que é o código de segurança?'></span> </label>
+
+                               <input type="text" name="usuario_security" class="form-control" id="usuario_security" onblur="fn_xjx_recover_password(xajax.getFormValues('formRecover'));" placeholder="Codigo de segurança">
+                               <span id="span_usuario_security"></span>
+                           </div>
+
+                       </div>
+                   </div>
+                   <div class="row" id="row_senha">
+                       <div class="col-md-6">
+
+                           <div class="form-group">
+                               <label for="usuario_pass" class="control-label">Senha</label>
+
+                               <input type="password" name="usuario_pass" class="form-control" id="usuario_pass" >
+                           </div>
+
+                       </div>
+
+                       <div class="col-md-6">
+
+                           <div class="form-group">
+
+                               <label for="usuario_pass_2" class="control-label">Confirmar senha</label>
+                               <input type="password" name="usuario_pass_2" class="form-control" id="usuario_pass_2" onblur="fn_xjx_recover_password(xajax.getFormValues('formRecover'));">
+
+                           </div>
+
+                       </div>
+                       <div class="col-md-12">
+
+                           <div class="form-group">
+                               <span id="span_senhas"></span>
+
+                           </div>
+
+                       </div>
+
+                       <input type="hidden" name="enviado" class="form-control" id="enviado" value="0">
+                       <input type="hidden" name="id_usuario" class="form-control" id="id_usuario">
+                   </div>
+               </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <a type="button" class="btn btn-default" id="btnCancelar" ><span class="fa fa-times-circle-o"></span> Cancelar</a>
+                <span id="row_actions">
+                    <a type="button" class="btn btn-info" onclick="fn_xjx_recover_new_password(xajax.getFormValues('formRecover'));">Alterar senha</a>
+                </span>
+
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+
+# Elementos Javascript Bottom
+
+$environment->get_jsc("main-gsap","includes/assets/js/gsap/");
+$environment->get_jsc("jquery-ui-1.10.3.minimal.min","includes/assets/js/jquery-ui/js/");
+$environment->get_jsc("bootstrap");
+$environment->get_jsc("joinable");
+$environment->get_jsc("resizeable");
+$environment->get_jsc("neon-api");
+$environment->get_jsc("jquery.validate.min");
+$environment->get_jsc("jquery.inputmask");
+$environment->get_jsc("neon-custom");
+$environment->get_jsc("neon-login");
+$environment->get_jsc("neon-demo");
+$environment->get_jsc("franx_custom");
+
+?>
+
+
+</body>
+</html>

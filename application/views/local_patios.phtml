@@ -1,0 +1,389 @@
+<?php
+$apps = new onCreateClass();
+$dropDown = new phpFormComponents();
+$Data = $this->getParameters();
+
+$dados = $Data['DadosPatio'];
+$comitente = $Data['DadosComitente'];
+$banco = $Data['DadosBanco'];
+
+
+?>
+<script type="text/javascript">
+    fn_ajax_modal('fn_setDadosComitente');
+
+</script>
+<div class="row">
+<div class="col-md-12">
+    <div id="msg"></div>
+</div>
+<div class="col-md-12">
+
+<form name="form-1" id="form-1" method="post" novalidate="novalidate">
+
+
+
+<input type="hidden" name="is_deleted" value="N">
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="panel panel-primary panel-gradient">
+            <div class="panel-heading">
+                <!-- titulo do painel -->
+                <div class="panel-title">
+                    <h4>
+                        Novo Pátio
+                        <br>
+                        <small><a> Adiciona um novo patio</a></small>
+                    </h4>
+                </div>
+
+                <!-- Controle do painel -->
+                <div class="panel-options ">
+
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <div class="panel">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="nome_patio">Vincular Comitente :</label>
+                            <br/>
+
+                            <div class="input-group">
+                                <input type="hidden" name="id_comitente" id="id_comitente" value="<?= $apps->getApplication()->getParam('srcid') ? $comitente->id_comitente : ""; ?>">
+                                <input type="text" name="nome_comitente" id="nome_comitente" class="form-control"
+                                       value="<?= $apps->getApplication()->getParam('srcid') ? $comitente->nome_comitente : ""; ?>">
+                                    <span class="input-group-btn"><button type="button" class="btn" onclick="$('#modal-comitente').modal('show');"><i class="fa fa-search"></i></button>
+                                    <button type="button" class="btn btn-red" onclick="fn_removeDadosComitente();;"><i class="fa fa-minus-square-o"></i></button>
+                                    </span>
+
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <label for="nome_patio">Nome do pátio:</label>
+                            <br/>
+
+                            <div class="form-group">
+
+                                <input type="text" name="nome_local" id="nome_local" class="form-control" data-validate="required"
+                                       data-message-required="Este campo é de preenchimento obrigatorio." placeholder="Campo Obrigatorio" value="<?= $dados->nome_local; ?>">
+                                </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="id_status">Situação do pátio:</label>
+                            <br/>
+
+                            <div class="btn-group" data-toggle="buttons-radio">
+                                <button type="button" class="btn <?= $dados->id_status == 1 ? "btn-green active" : "btn-default"; ?>" onclick="fn_xjx_set_value('id_status', 1,'value');
+                                            " data-toggle="button"><i class="icon-ok-sign"></i>&nbsp;Ativo
+                                </button>
+                                <button type="button" class="btn <?= $dados->id_status == 2 ? "btn-orange active" : "btn-default"; ?> " onclick="fn_xjx_set_value('id_status', 2,'value');"
+                                        data-toggle="button"><i
+                                        class="icon-remove-circle"></i>&nbsp;Inativo
+                                </button>
+
+                            </div>
+                            <input type="hidden" name="id_status" id="id_status" value="<?= $dados->id_status == 2 ? 2 : 1; ?>">
+                        </div>
+
+                    </div>
+                    <br/>
+
+                    <!-- DOCUMENTOS -->
+                    <div class="row">
+
+                        <span class="fa fa-info-circle information-popover-patio popover-default" data-toggle="popover" data-trigger="hover" data-placement="left"
+                              data-content="Nome da pessoa responsavel pelo o pátio, que respondera pelo o mesmo." data-original-title="Responsável do pátio"> </span>
+
+                        <div class="col-md-11">
+                            <label for="responsavel">Nome do reponsável:</label>
+                            <br/>
+
+                            <div class="form-group">
+                                <input type="text" name="nome_responsavel" id="nome_responsavel" class="form-control" value="<?= $dados->nome_responsavel; ?>">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <br/>
+
+                    <!--TELEFONES -->
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="ddd_r">(DDD)</label>
+                            <br/>
+                            <input type="text" name="ddd_r" id="ddd_r" class="form-control" data-mask="999" value="<?= $dados->ddd_r; ?>">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="telefone_r">Telefone:</label>
+                            <br/>
+                            <input type="text" name="telefone_r" id="telefone_r" class="form-control" data-mask="9999-9999" value="<?= $dados->telefone_r; ?>">
+                        </div>
+
+
+                        <div class="col-md-2">
+                            <label for="ddd_cel_1">(DDD)</label>
+                            <br/>
+                            <input type="text" name="ddd_cel_1" id="ddd_cel_1" class="form-control" data-mask="999" value="<?= $dados->ddd_cel_1; ?>">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="telefone_c">Celular :</label>
+                            <br/>
+                            <input type="text" name="celular_1" id="celular_1" class="form-control" data-mask="99999-9999" value="<?= $dados->celular_1; ?>">
+                        </div>
+                    </div>
+
+                    <!-- EMAIL -->
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="email_p">E-mail:</label>
+                            <br/>
+
+                            <div class="form-group">
+                                <input type="email" name="email_p" id="email_p" class="form-control" data-validate="required"
+                                       data-message-required="Este campo é de preenchimento obrigatorio." placeholder="Campo Obrigatorio" value="<?= $dados->email_p; ?>">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-primary panel-gradient">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>
+                        Informações de pagamento do pátio
+                        <br>
+                        <small>Dados bancários para pagamento do pátio</small>
+                    </h4>
+                </div>
+                <div class="panel-options">
+
+                </div>
+
+            </div>
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <label> Selecione o banco</label>
+                        <select id="id_banco" name="id_banco" class="form-control">
+                            <option value=""></option>
+                            <?=$dropDown->DropDownList('tb_bancos','id_banco','nome_banco',$banco->id_banco);?>
+                        </select>
+
+                    </div>
+
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <label>Nome do titular da conta</label>
+                        <input type="text" name="nome_titular" id="nome_titular" class="form-control" value="<?= $banco->nome_titular; ?>">
+
+                    </div>
+
+
+                </div>
+                <br /><br />
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <label>Numero da agencia</label>
+                        <input type="text" name="num_agencia" id="num_agencia" class="form-control" value="<?= $banco->num_agencia; ?>">
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label>Numero da conta</label>
+                        <input type="text" name="num_conta" id="num_conta" class="form-control" value="<?= $banco->num_conta; ?>">
+
+                    </div>
+
+                </div>
+                <br /><br />
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <label> Selecione a forma de pagamento</label>
+                        <select id="id_forma_pagto" name="id_forma_pagto" class="form-control">
+                            <option value=""></option>
+                            <?=$dropDown->DropDownList('tb_forma_pagto','id_forma_pagto','forma_nome',$dados->id_forma_pagto);?>
+                        </select>
+
+                    </div>
+
+
+                </div>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="panel panel-primary panel-gradient ">
+
+    <div class="panel-heading">
+        <!-- titulo do painel -->
+        <div class="panel-title">
+            <h4>
+                Dados de Endereço do pátio
+                <br>
+                <small>Endereços do local de visiatação</small>
+            </h4>
+        </div>
+        <div class="panel-options">
+
+
+        </div>
+
+    </div>
+    <div class="panel-body">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <label for="cep_r">CEP:</label>
+                <br/>
+                <input type="text" name="cep_r" onblur="fn_xjx_helperGetCep(xajax.getFormValues('form-1'), 'cep_r');" id="cep_r" class="form-control"
+                       data-mask="99999-999" value="<?= $dados->cep_r; ?>">
+            </div>
+
+            <div class="col-md-3">
+                <label for="id_logradouro_r">Logradouro:</label>
+                <br/>
+                <select name="id_logradouro_r" id="id_logradouro_r" class="form-control" value="<?= $dados->id_logradouro_r; ?>">
+                    <?php
+
+                    $dropDown->DropDownList('tb_enderecos_logradouro', 'id_logradouro', 'logradouro_nome', $dados->id_logradouro_r);
+                    ?>
+                </select>
+            </div>
+
+
+            <div class="col-md-3">
+                <label for="id_estado">Estado:</label>
+                <br/>
+                <select name="id_estado_r" id="id_estado_r" class="form-control">
+                    <?php
+                    $dropDown->DropDownList('tb_enderecos_estados', 'id_estado', 'estado_sigla', $dados->id_estado_r);
+                    ?>
+                </select>
+            </div>
+
+        </div>
+
+        <br/>
+
+        <div class="row">
+            <div class="col-md-5">
+                <label for="logradouro_nome_r">Endereço:</label>
+                <br/>
+                <input type="text" name="logradouro_nome_r" id="logradouro_nome_r" class="form-control" value="<?= $dados->logradouro_nome_r; ?>">
+            </div>
+            <div class="col-md-1">
+                <label for="numero_r">Numero:</label>
+                <br/>
+                <input type="text" name="numero_r" id="numero_r" class="form-control" data-mask="99999" value="<?= $dados->numero_r; ?>">
+            </div>
+            <div class="col-md-3">
+                <label for="complemento_r">Complemento:</label>
+                <br/>
+                <input type="text" name="complemento_r" id="complemento_r" class="form-control" value="<?= $dados->complemento_r; ?>">
+            </div>
+
+        </div>
+
+        <br/>
+
+        <div class="row">
+            <div class="col-md-5">
+                <label for="bairro_r">Bairro:</label>
+                <br/>
+                <input type="text" name="bairro_r" id="bairro_r" class="form-control" value="<?= $dados->bairro_r; ?>">
+            </div>
+            <div class="col-md-4">
+                <label for="cidade_r">Cidade:</label>
+                <br/>
+                <input type="text" name="cidade_r" id="cidade_r" class="form-control" value="<?= $dados->cidade_r; ?>">
+            </div>
+
+
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-9">
+                <label for="bairro_r">Observações:</label>
+                <br/>
+                <textarea name="observacao"  id="observacao" rows="5" cols="55" class="form-control" ><?= $dados->observacao; ?></textarea>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="panel panel-primary panel-gradient">
+
+    <div class="row">
+        <div class="panel-body">
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-green btn-icon icon-left btn-block">
+                    Salvar
+                    <i class="entypo-check"></i>
+                </button>
+                <input type="hidden" name="<?= $apps->getApplication()->getParam('srcid') ? "Alterar" : "Salvar"; ?>" value=TRUE>
+            </div>
+
+            <div class="col-sm-2">
+                <button type="button" class="btn btn-orange btn-icon icon-left  btn-block" onclick="window.location='<?= $apps->getFunctions()->goToUrl("patios", null); ?>'">
+                    Cancelar
+                    <i class="entypo-cancel"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</form>
+</div>
+</div>
+<script type="text/javascript">
+
+    fn_setDadosComitente();
+</script>
