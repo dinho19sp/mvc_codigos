@@ -12,11 +12,11 @@ class Float {
     protected static  $_float;
 
 
-    public static function Int($float)
+    public static function isFloat($float)
     {
         try
         {
-            if(is_int($float))
+            if(is_float($float))
             {
                 self::$_float = $float;
                 return self::$_float;
